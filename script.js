@@ -5,39 +5,36 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const characters = '01カタカナひらがな漢字';
+    const matrix = "78XCFBGOlS6keY1Bil";
     const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops = [];
-    const colors = ['#00ff41', '#008F11', '#003B00'];
+    const columns = canvas.width/fontSize;
 
-    for (let i = 0; i < columns; i++) {
-        drops[i] = 1;
-    }
+    const rainDrops = Array(Math.floor(columns)).fill(1);
 
     function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        for (let i = 0; i < drops.length; i++) {
-            const text = characters.charAt(Math.floor(Math.random() * characters.length));
-            ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-            ctx.font = `${fontSize}px 'JetBrains Mono'`;
-            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        ctx.fillStyle = '#00ff41';
+        ctx.font = fontSize + 'px monospace';
 
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
+        for(let i = 0; i < rainDrops.length; i++) {
+            const text = matrix.charAt(Math.floor(Math.random() * matrix.length));
+            ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+            
+            if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975) {
+                rainDrops[i] = 0;
             }
-            drops[i]++;
+            rainDrops[i]++;
         }
     }
-
-    setInterval(draw, 35);
 
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
+
+    setInterval(draw, 30);
 });
 
 // Loading Screen
@@ -96,3 +93,17 @@ document.querySelectorAll('.project-card, .skill-item, .section-title').forEach(
     el.classList.add('animate-hidden');
     observer.observe(el);
 });
+
+// Add smooth reveal on scroll
+const revealOnScroll = () => {
+    const elements = document.querySelectorAll('.animate-hidden');
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add('animate-in');
+        }
+    });
+};
+
+window.addEventListener('scroll', revealOnScroll);
