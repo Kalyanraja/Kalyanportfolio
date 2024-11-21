@@ -270,6 +270,65 @@ body {
     transform: scale(1.05);
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    #content {
+        padding: 0 50px;
+    }
+
+    .section {
+        padding: 80px 0;
+    }
+
+    .hero {
+        text-align: center;
+    }
+
+    .about-text, .about-pic {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Creative Cursor */
+.cursor-dot, .cursor-dot-outline {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 9999;
+}
+
+.cursor-dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--green);
+}
+
+.cursor-dot-outline {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(100, 255, 218, 0.1);
+    border: 2px solid var(--green);
+    transition: transform 0.15s ease-in-out;
+}
+
+body:hover .cursor-dot-outline {
+    transform: scale(1.2);
+}
+
 /* Add more specific styles as needed */
  
 

@@ -10,6 +10,11 @@ window.addEventListener('mousemove', (e) => {
     cursorOutline.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
 });
 
+window.addEventListener('mouseout', () => {
+    cursor.style.opacity = '0';
+    cursorOutline.style.opacity = '0';
+});
+
 // Noise effect
 const noise = document.getElementById('noise');
 function createNoise() {
