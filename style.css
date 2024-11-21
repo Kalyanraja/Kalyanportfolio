@@ -1,240 +1,213 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('matrix-background');
-    const ctx = canvas.getContext('2d');
+:root {
+    --dark-navy: #020c1b;
+    --navy: #0a192f;
+    --light-navy: #112240;
+    --lightest-navy: #233554;
+    --navy-shadow: rgba(2,12,27,0.7);
+    --slate: #8892b0;
+    --light-slate: #a8b2d1;
+    --lightest-slate: #ccd6f6;
+    --white: #e6f1ff;
+    --green: #64ffda;
+    --green-tint: rgba(100,255,218,0.1);
+}
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    const matrix = "78XCFBGOlS6keY1Bil";
-    const fontSize = 16;
-    const columns = canvas.width/fontSize;
+body {
+    background-color: var(--navy);
+    color: var(--slate);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.3;
+}
 
-    const rainDrops = Array(Math.floor(columns)).fill(1);
+/* Side Elements */
+.side-email, .side-social {
+    position: fixed;
+    bottom: 0;
+    width: 40px;
+    z-index: 10;
+}
 
-    function draw() {
-        ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+.side-email {
+    right: 40px;
+    writing-mode: vertical-rl;
+}
 
-        ctx.fillStyle = '#00ff41';
-        ctx.font = fontSize + 'px monospace';
+.side-social {
+    left: 40px;
+}
 
-        for(let i = 0; i < rainDrops.length; i++) {
-            const text = matrix.charAt(Math.floor(Math.random() * matrix.length));
-            ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
-            
-            if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975) {
-                rainDrops[i] = 0;
-            }
-            rainDrops[i]++;
-        }
-    }
+.side-email a, .side-social a {
+    color: var(--light-slate);
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
 
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
+.side-social ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
 
-    setInterval(draw, 30);
-});
+/* Main Content */
+#content {
+    padding: 0 150px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
 
-// Loading Screen
-window.addEventListener('load', () => {
-    const loadingScreen = document.getElementById('loading-screen');
-    setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-        }, 500);
-    }, 1500);
-});
+.section {
+    margin: 0 auto;
+    padding: 100px 0;
+    max-width: 1000px;
+}
 
-// Scroll to Top
-const scrollBtn = document.getElementById('scroll-top');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        scrollBtn.classList.add('visible');
-    } else {
-        scrollBtn.classList.remove('visible');
-    }
-});
+/* Numbered Headings */
+.numbered-heading {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 10px 0 40px;
+    width: 100%;
+    font-size: clamp(26px, 5vw, 32px);
+    white-space: nowrap;
+    color: var(--lightest-slate);
+}
 
-scrollBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
+.numbered-heading:before {
+    position: relative;
+    counter-increment: section;
+    content: "0" counter(section) ".";
+    margin-right: 10px;
+    color: var(--green);
+    font-family: 'Fira Code', monospace;
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 400;
+}
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-// Tab functionality for experience section
-const tabButtons = document.querySelectorAll('.tab-button');
-const tabPanels = document.querySelectorAll('.tab-panel');
+.big-heading {
+    margin: 0;
+    font-size: clamp(40px, 8vw, 80px);
+    color: var(--lightest-slate);
+}
 
-tabButtons.forEach((button, index) => {
-    button.addEventListener('click', () => {
-        // Remove active class from all buttons and panels
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        tabPanels.forEach(panel => panel.classList.remove('active'));
-        
-        // Add active class to clicked button and corresponding panel
-        button.classList.add('active');
-        tabPanels[index].classList.add('active');
-    });
-});
+.hero-text {
+    margin: 20px 0 0;
+    max-width: 540px;
+    color: var(--slate);
+}
 
-// Intersection Observer for scroll animations
-const observerOptions = {
-    threshold: 0.25
-};
+/* Projects Grid */
+.projects-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-        }
-    });
-}, observerOptions);
+.project {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    gap: 10px;
+}
 
-document.querySelectorAll('.section').forEach(section => {
-    observer.observe(section);
-});
+/* Custom Cursor */
+.cursor-dot, .cursor-dot-outline {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 9999;
+}
 
-// Custom Cursor
-const cursor = {
-    dot: document.querySelector('.cursor-dot'),
-    dotOutline: document.querySelector('.cursor-dot-outline'),
-    cursorVisible: true,
-    cursorEnlarged: false,
-    
-    endX: window.innerWidth / 2,
-    endY: window.innerHeight / 2,
-    
-    init: function() {
-        document.addEventListener('mousemove', (e) => {
-            this.endX = e.pageX;
-            this.endY = e.pageY;
-            this.dot.style.top = this.endY + 'px';
-            this.dot.style.left = this.endX + 'px';
-        });
-        
-        this.setupEventListeners();
-        this.animateDotOutline();
-    },
-    
-    setupEventListeners: function() {
-        document.querySelectorAll('a, button, .hover-effect').forEach(el => {
-            el.addEventListener('mouseover', () => {
-                this.cursorEnlarged = true;
-                this.toggleCursorSize();
-            });
-            el.addEventListener('mouseout', () => {
-                this.cursorEnlarged = false;
-                this.toggleCursorSize();
-            });
-        });
-    },
-    
-    toggleCursorSize: function() {
-        if (this.cursorEnlarged) {
-            this.dotOutline.style.transform = 'translate(-50%, -50%) scale(2.5)';
-            this.dot.style.transform = 'translate(-50%, -50%) scale(0.5)';
-        } else {
-            this.dotOutline.style.transform = 'translate(-50%, -50%) scale(1)';
-            this.dot.style.transform = 'translate(-50%, -50%) scale(1)';
-        }
-    },
-    
-    animateDotOutline: function() {
-        let x = 0;
-        let y = 0;
-        
-        const animate = () => {
-            x += (this.endX - x) * 0.08;
-            y += (this.endY - y) * 0.08;
-            
-            this.dotOutline.style.top = y + 'px';
-            this.dotOutline.style.left = x + 'px';
-            
-            requestAnimationFrame(animate);
-        };
-        animate();
-    }
-};
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--green);
+}
 
-// Noise Effect
-const noise = () => {
-    let canvas, ctx;
-    
-    const createNoise = () => {
-        const idata = ctx.createImageData(canvas.width, canvas.height);
-        const buffer32 = new Uint32Array(idata.data.buffer);
-        const len = buffer32.length;
+.cursor-dot-outline {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(100, 255, 218, 0.1);
+    border: 2px solid var(--green);
+}
 
-        for(let i = 0; i < len; i++) {
-            if(Math.random() < 0.5) {
-                buffer32[i] = 0xff000000;
-            }
-        }
-        
-        ctx.putImageData(idata, 0, 0);
-    };
-    
-    const init = () => {
-        canvas = document.createElement('canvas');
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.pointerEvents = 'none';
-        canvas.style.zIndex = '9998';
-        document.getElementById('noise').appendChild(canvas);
-        
-        ctx = canvas.getContext('2d');
-        
-        const resize = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-        window.addEventListener('resize', resize);
-        resize();
-        
-        const loop = () => {
-            createNoise();
-            requestAnimationFrame(loop);
-        };
-        loop();
-    };
-    
-    init();
-};
+/* Noise Effect */
+#noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.05;
+    z-index: 9998;
+}
 
-// Initialize everything
-document.addEventListener('DOMContentLoaded', () => {
-    cursor.init();
-    noise();
-    
-    // Magnetic Buttons
-    document.querySelectorAll('.magnetic-button').forEach(button => {
-        button.addEventListener('mousemove', (e) => {
-            const position = button.getBoundingClientRect();
-            const x = e.pageX - position.left - position.width / 2;
-            const y = e.pageY - position.top - position.height / 2;
-            
-            button.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
-        });
-        
-        button.addEventListener('mouseout', () => {
-            button.style.transform = 'translate(0px, 0px)';
-        });
-    });
-});
+/* Enhanced Navigation */
+.nav-links {
+    position: relative;
+}
+
+.nav-links ol li a {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links ol li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: var(--green);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%);
+}
+
+.nav-links ol li a:hover::after {
+    width: 100%;
+}
+
+/* Magnetic Buttons */
+.magnetic-button {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    background: var(--green-tint);
+    border: 1px solid var(--green);
+    border-radius: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.magnetic-button:hover {
+    transform: scale(1.05);
+}
+
+/* Add more specific styles as needed */
+ 
