@@ -65,45 +65,176 @@ scrollBtn.addEventListener('click', () => {
     });
 });
 
-// Smooth Scrolling for Navigation
+// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        target.scrollIntoView({
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
             behavior: 'smooth'
         });
     });
 });
 
-// Scroll Animation
+// Tab functionality for experience section
+const tabButtons = document.querySelectorAll('.tab-button');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+tabButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        // Remove active class from all buttons and panels
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabPanels.forEach(panel => panel.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding panel
+        button.classList.add('active');
+        tabPanels[index].classList.add('active');
+    });
+});
+
+// Intersection Observer for scroll animations
 const observerOptions = {
-    threshold: 0.1
+    threshold: 0.25
 };
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
+            entry.target.classList.add('fade-in');
         }
     });
 }, observerOptions);
 
-document.querySelectorAll('.project-card, .skill-item, .section-title').forEach(el => {
-    el.classList.add('animate-hidden');
-    observer.observe(el);
+document.querySelectorAll('.section').forEach(section => {
+    observer.observe(section);
 });
 
-// Add smooth reveal on scroll
-const revealOnScroll = () => {
-    const elements = document.querySelectorAll('.animate-hidden');
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        if (elementTop < window.innerHeight - elementVisible) {
-            element.classList.add('animate-in');
+// Custom Cursor
+const cursor = {
+    dot: document.querySelector('.cursor-dot'),
+    dotOutline: document.querySelector('.cursor-dot-outline'),
+    cursorVisible: true,
+    cursorEnlarged: false,
+    
+    endX: window.innerWidth / 2,
+    endY: window.innerHeight / 2,
+    
+    init: function() {
+        document.addEventListener('mousemove', (e) => {
+            this.endX = e.pageX;
+            this.endY = e.pageY;
+            this.dot.style.top = this.endY + 'px';
+            this.dot.style.left = this.endX + 'px';
+        });
+        
+        this.setupEventListeners();
+        this.animateDotOutline();
+    },
+    
+    setupEventListeners: function() {
+        document.querySelectorAll('a, button, .hover-effect').forEach(el => {
+            el.addEventListener('mouseover', () => {
+                this.cursorEnlarged = true;
+                this.toggleCursorSize();
+            });
+            el.addEventListener('mouseout', () => {
+                this.cursorEnlarged = false;
+                this.toggleCursorSize();
+            });
+        });
+    },
+    
+    toggleCursorSize: function() {
+        if (this.cursorEnlarged) {
+            this.dotOutline.style.transform = 'translate(-50%, -50%) scale(2.5)';
+            this.dot.style.transform = 'translate(-50%, -50%) scale(0.5)';
+        } else {
+            this.dotOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+            this.dot.style.transform = 'translate(-50%, -50%) scale(1)';
         }
-    });
+    },
+    
+    animateDotOutline: function() {
+        let x = 0;
+        let y = 0;
+        
+        const animate = () => {
+            x += (this.endX - x) * 0.08;
+            y += (this.endY - y) * 0.08;
+            
+            this.dotOutline.style.top = y + 'px';
+            this.dotOutline.style.left = x + 'px';
+            
+            requestAnimationFrame(animate);
+        };
+        animate();
+    }
 };
 
-window.addEventListener('scroll', revealOnScroll);
+// Noise Effect
+const noise = () => {
+    let canvas, ctx;
+    
+    const createNoise = () => {
+        const idata = ctx.createImageData(canvas.width, canvas.height);
+        const buffer32 = new Uint32Array(idata.data.buffer);
+        const len = buffer32.length;
+
+        for(let i = 0; i < len; i++) {
+            if(Math.random() < 0.5) {
+                buffer32[i] = 0xff000000;
+            }
+        }
+        
+        ctx.putImageData(idata, 0, 0);
+    };
+    
+    const init = () => {
+        canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '9998';
+        document.getElementById('noise').appendChild(canvas);
+        
+        ctx = canvas.getContext('2d');
+        
+        const resize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+        window.addEventListener('resize', resize);
+        resize();
+        
+        const loop = () => {
+            createNoise();
+            requestAnimationFrame(loop);
+        };
+        loop();
+    };
+    
+    init();
+};
+
+// Initialize everything
+document.addEventListener('DOMContentLoaded', () => {
+    cursor.init();
+    noise();
+    
+    // Magnetic Buttons
+    document.querySelectorAll('.magnetic-button').forEach(button => {
+        button.addEventListener('mousemove', (e) => {
+            const position = button.getBoundingClientRect();
+            const x = e.pageX - position.left - position.width / 2;
+            const y = e.pageY - position.top - position.height / 2;
+            
+            button.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
+        });
+        
+        button.addEventListener('mouseout', () => {
+            button.style.transform = 'translate(0px, 0px)';
+        });
+    });
+});
