@@ -25,6 +25,7 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.3;
     counter-reset: section;
+    overflow-x: hidden;
 }
 
 /* Side Elements */
@@ -131,6 +132,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    animation: fadeIn 1s ease-in-out;
 }
 
 .big-heading {
@@ -159,6 +161,7 @@ body {
     align-items: center;
     gap: 10px;
     margin-bottom: 100px;
+    animation: slideIn 1s ease-in-out;
 }
 
 .project-tech-list {
@@ -203,16 +206,21 @@ body {
 }
 
 .cursor-dot {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     background-color: var(--green);
 }
 
 .cursor-dot-outline {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background-color: rgba(100, 255, 218, 0.1);
     border: 2px solid var(--green);
+    transition: transform 0.15s ease-in-out;
+}
+
+body:hover .cursor-dot-outline {
+    transform: scale(1.2);
 }
 
 /* Noise Effect */
@@ -298,38 +306,26 @@ body {
     }
 }
 
-/* Creative Cursor */
-.cursor-dot, .cursor-dot-outline {
-    pointer-events: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-    z-index: 9999;
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-.cursor-dot {
-    width: 12px;
-    height: 12px;
-    background-color: var(--green);
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
-
-.cursor-dot-outline {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(100, 255, 218, 0.1);
-    border: 2px solid var(--green);
-    transition: transform 0.15s ease-in-out;
-}
-
-body:hover .cursor-dot-outline {
-    transform: scale(1.2);
-}
-
-/* Add more specific styles as needed */
  
 
 
