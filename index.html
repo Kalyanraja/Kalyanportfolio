@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Tech Portfolio</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Kalyan Raja Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="preload" as="image" href="critical-image.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="mediaqueries.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div id="matrix-background"></div>
@@ -15,7 +18,7 @@
         <div class="nav-content">
             <div class="logo">
                 <span class="bracket">{</span>
-                <span class="name">YourName</span>
+                <span class="name">Kalyanraja</span>
                 <span class="bracket">}</span>
             </div>
             <div class="nav-links">
@@ -27,7 +30,150 @@
         </div>
     </nav>
     <main>
-        <!-- Your sections here -->
+        <!-- Home Section -->
+        <section id="home" class="section-container">
+            <div class="profile-container">
+                <div class="profile-text">
+                    <h1>Hi, I'm <span class="highlight">Kalyan Raja</span></h1>
+                    <h2>Graduate Student at Florida State University</h2>
+                    <p>Code whisperer, caffeine connoisseur, and champion of complexity.</p>
+                    <div class="cta-buttons">
+                        <a href="#" class="btn primary-btn" onclick="window.open('./assets/Kalyan-Resume.pdf')">Download Resume</a>
+                        <a href="#contact" class="btn secondary-btn">Contact Me</a>
+                    </div>
+                </div>
+                <div class="profile-image">
+                    <img src="./assets/profile-pic.png" alt="Kalyan Raja">
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section-container">
+            <h2 class="section-title">Research Projects</h2>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <img src="./assets/d.jpeg" alt="Driver Safety Prediction System">
+                    <h3>Driver Safety Prediction System</h3>
+                    <div class="project-links">
+                        <a href="https://www.ijsr.net/archive/v11i11/SR221121203453.pdf" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Paper
+                        </a>
+                        <a href="./assets/certi1.pdf" target="_blank">
+                            <i class="fas fa-certificate"></i> Certificate
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="./assets/opt.jpeg" alt="Optimizers in Deep Learning">
+                    <h3>Optimizers in Deep Learning</h3>
+                    <div class="project-links">
+                        <a href="https://www.ijraset.com/best-journal/optimizers-in-deep-learning-a-comparative-study-and-analysis" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Paper
+                        </a>
+                        <a href="./assets/certi2.pdf" target="_blank">
+                            <i class="fas fa-certificate"></i> Certificate
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="./assets/h.jpeg" alt="Cardiovascular disease prediction">
+                    <h3>Cardiovascular Disease Prediction</h3>
+                    <div class="project-links">
+                        <a href="http://www.ijaresm.com/uploaded_files/document_file/Bhavya_Pandya_compressedvmcl.pdf" target="_blank">
+                            <i class="fas fa-file-pdf"></i> Paper
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="./assets/project-4.png" alt="gCore Project">
+                    <h3>gCore: Crosslayer Cohesiveness in Multilayer Graphs</h3>
+                    <div class="project-links">
+                        <a href="https://github.com/Kalyanraja/gCore-Cross-layer-Cohesiveness-in-Multi-layer-Graphs" target="_blank">
+                            <i class="fab fa-github"></i> Github
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="./assets/micro.png" alt="Hospital Inventory Management">
+                    <h3>Hospital Inventory Management: REST API</h3>
+                    <div class="project-links">
+                        <a href="https://github.com/Kalyanraja/18DB1A054X-MICRO-PROJECT-1" target="_blank">
+                            <i class="fab fa-github"></i> Github
+                        </a>
+                    </div>
+                </article>
+
+                <article class="project-card">
+                    <img src="./assets/featured.png" alt="Flipkart GRID 3.0">
+                    <h3>Flipkart GRID 3.0: E-Commerce and Tech Challenge</h3>
+                    <div class="project-links">
+                        <a href="./assets/Cdflip.pdf" target="_blank">
+                            <i class="fas fa-certificate"></i> Certificate
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section-container">
+            <h2 class="section-title">Skills & Technologies</h2>
+            <div class="skills-container">
+                <div class="skills-category">
+                    <h3>Frontend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML5</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>CSS3</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-js"></i>
+                            <span>JavaScript</span>
+                        </div>
+                        <!-- Add more frontend skills -->
+                    </div>
+                </div>
+                <div class="skills-category">
+                    <h3>Backend</h3>
+                    <div class="skills-grid">
+                        <!-- Add backend skills -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:kk23p@fsu.edu">kk23p@fsu.edu</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <a href="https://www.linkedin.com/in/kalyan-raja-kadari-181638167/" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <a href="https://github.com/Kalyanraja" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+    <footer>
+        <p>&copy; 2024 Kalyanraja. All rights reserved.</p>
+    </footer>
 </body>
 </html> 
