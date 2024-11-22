@@ -20,11 +20,12 @@
 }
 
 body {
-    background-color: var(--background);
+    background-color: var(--navy);
     color: var(--text);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
+    position: relative;
 }
 
 /* Custom Cursor */
@@ -32,13 +33,12 @@ body {
 .cursor-dot-outline {
     pointer-events: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
-    opacity: 0;
+    top: 0;
+    left: 0;
     transform: translate(-50%, -50%);
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    border-radius: 50%;
     z-index: 9999;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .cursor-dot {
@@ -50,8 +50,8 @@ body {
 .cursor-dot-outline {
     width: 40px;
     height: 40px;
-    background-color: rgba(100, 255, 218, 0.1);
     border: 2px solid var(--primary);
+    transition: all 0.2s ease-out;
 }
 
 /* Navigation */
@@ -115,18 +115,22 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
     padding: 0 150px;
-    position: relative;
+    margin-top: -80px;
 }
 
 .hero-content {
     max-width: 1000px;
-    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease forwards;
 }
 
-.hero-title {
-    margin-bottom: 30px;
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-title .greeting {
@@ -134,19 +138,18 @@ body {
     font-family: 'Fira Code', monospace;
     font-size: 16px;
     margin-bottom: 20px;
-    display: block;
 }
 
 .hero-title h1 {
-    font-size: 80px;
+    font-size: clamp(40px, 8vw, 80px);
     margin: 0;
     color: var(--lightest-slate);
 }
 
 .hero-title h2 {
-    font-size: 60px;
-    margin: 0;
+    font-size: clamp(30px, 6vw, 60px);
     color: var(--slate);
+    margin: 10px 0 20px;
 }
 
 .hero-content p {
@@ -177,14 +180,24 @@ body {
 
 /* About Section */
 .section {
-    padding: 100px 150px;
+    padding: 100px 0;
+    margin: 0 auto;
+    max-width: 1200px;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s ease;
 }
 
 .section-title {
-    font-size: 32px;
-    color: var(--heading);
-    margin-bottom: 50px;
+    font-size: clamp(26px, 5vw, 32px);
+    margin-bottom: 60px;
     position: relative;
+    display: inline-block;
 }
 
 .section-title::after {
@@ -192,9 +205,18 @@ body {
     position: absolute;
     bottom: -10px;
     left: 0;
-    width: 60px;
+    width: 60%;
     height: 4px;
     background-color: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: expandWidth 0.6s ease forwards;
+}
+
+@keyframes expandWidth {
+    to {
+        transform: scaleX(1);
+    }
 }
 
 .about-content {
@@ -235,20 +257,24 @@ body {
 /* Projects Section */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    padding: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px 0;
 }
 
 .project-card {
-    background: var(--navy-light);
+    background: rgba(17, 34, 64, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 255, 218, 0.1);
     border-radius: 4px;
     padding: 25px;
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
 }
 
 .project-image img {
@@ -417,8 +443,14 @@ footer {
     background: rgba(17, 34, 64, 0.7);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(100, 255, 218, 0.1);
-    border-radius: 15px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border-radius: 4px;
+    padding: 30px;
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
 }
 
 /* Animated Skill Tags */
@@ -538,31 +570,22 @@ footer {
     max-width: 900px;
     margin: 0 auto;
     padding: 30px;
+    position: relative;
 }
 
 .experience-item {
     display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 20px;
-    margin-bottom: 30px;
-    position: relative;
-}
-
-.experience-item::before {
-    content: '';
-    position: absolute;
-    left: 145px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--primary);
-    opacity: 0.3;
+    grid-template-columns: minmax(140px, auto) 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
 }
 
 .experience-date {
-    color: var(--primary);
     font-family: 'Fira Code', monospace;
+    color: var(--primary);
     font-size: 14px;
+    position: sticky;
+    top: 20px;
 }
 
 .experience-content {
@@ -663,21 +686,41 @@ footer {
 
 .achievements-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
     padding: 20px;
 }
 
 .achievement-card {
-    background: var(--navy-light);
+    background: rgba(17, 34, 64, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(100, 255, 218, 0.1);
     border-radius: 4px;
     padding: 25px;
     transition: all 0.3s ease;
-    border: 1px solid rgba(100, 255, 218, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.achievement-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--primary);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+}
+
+.achievement-card:hover::before {
+    transform: scaleY(1);
 }
 
 .achievement-card:hover {
-    transform: translateY(-5px);
+    transform: translateX(5px);
     border-color: var(--primary);
 }
 
@@ -698,6 +741,32 @@ footer {
     color: var(--slate);
     font-size: 16px;
     line-height: 1.6;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+/* Background styling */
+body {
+    background-color: var(--navy);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.background-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: 
+        linear-gradient(to right, rgba(100, 255, 218, 0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(100, 255, 218, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    opacity: 0.2;
 }
 
 
