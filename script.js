@@ -238,3 +238,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Form animations
+const formGroups = document.querySelectorAll('.form-group');
+
+formGroups.forEach(group => {
+    const input = group.querySelector('input, textarea');
+    const label = group.querySelector('label');
+
+    input.addEventListener('focus', () => {
+        group.classList.add('focused');
+    });
+
+    input.addEventListener('blur', () => {
+        if (!input.value) {
+            group.classList.remove('focused');
+        }
+    });
+});
+
+// Contact form submission
+const contactForm = document.getElementById('contact-form');
+contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = contactForm.querySelector('.submit-btn');
+    submitBtn.innerHTML = '<span class="loading"></span>';
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    submitBtn.innerHTML = 'Message Sent!';
+    contactForm.reset();
+    
+    setTimeout(() => {
+        submitBtn.innerHTML = 'Send Message';
+    }, 3000);
+});
