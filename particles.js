@@ -1,59 +1,54 @@
-class Particle {
-    constructor(canvas) {
-        this.canvas = canvas;
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
+class ParticleSystem {
+    constructor() {
+        this.particles = [];
+        this.canvas = document.createElement('canvas');
+        this.canvas.classList.add('particle-canvas');
+        document.body.appendChild(this.canvas);
+        this.ctx = this.canvas.getContext('2d');
+        this.resize();
+        this.createParticles();
+        this.animate();
+        window.addEventListener('resize', () => this.resize());
     }
 
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x > this.canvas.width) this.x = 0;
-        if (this.x < 0) this.x = this.canvas.width;
-        if (this.y > this.canvas.height) this.y = 0;
-        if (this.y < 0) this.y = this.canvas.height;
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
     }
 
-    draw(ctx) {
-        ctx.fillStyle = 'rgba(100, 255, 218, 0.5)';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+    createParticles() {
+        const particleCount = 100;
+        for (let i = 0; i < particleCount; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                size: Math.random() * 2,
+                speedX: Math.random() * 2 - 1,
+                speedY: Math.random() * 2 - 1
+            });
+        }
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.particles.forEach(particle => {
+            particle.x += particle.speedX;
+            particle.y += particle.speedY;
+            
+            if (particle.x > this.canvas.width) particle.x = 0;
+            if (particle.x < 0) particle.x = this.canvas.width;
+            if (particle.y > this.canvas.height) particle.y = 0;
+            if (particle.y < 0) particle.y = this.canvas.height;
+            
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            this.ctx.fillStyle = 'rgba(100, 255, 218, 0.1)';
+            this.ctx.fill();
+        });
+        
+        requestAnimationFrame(() => this.animate());
     }
 }
 
-const initParticles = () => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.classList.add('particle-canvas');
-    document.querySelector('.hero-background').appendChild(canvas);
-
-    const particles = [];
-    const particleCount = 100;
-
-    const resize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    };
-    
-    window.addEventListener('resize', resize);
-    resize();
-
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(canvas));
-    }
-
-    const animate = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(particle => {
-            particle.update();
-            particle.draw(ctx);
-        });
-        requestAnimationFrame(animate);
-    };
-    animate();
-}; 
+new ParticleSystem(); 

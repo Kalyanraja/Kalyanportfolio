@@ -149,3 +149,51 @@
         font-size: 14px;
     }
 }
+
+/* Mobile Devices */
+@media screen and (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-card {
+        margin: 1rem 0;
+    }
+}
+
+/* Tablets */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Laptops */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Large Screens */
+@media screen and (min-width: 1025px) {
+    .hero-content h1 {
+        font-size: 4rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
