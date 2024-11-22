@@ -33,12 +33,12 @@ body {
 .cursor-dot-outline {
     pointer-events: none;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    z-index: 9999;
-    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.1s ease-out;
 }
 
 .cursor-dot {
@@ -50,8 +50,7 @@ body {
 .cursor-dot-outline {
     width: 40px;
     height: 40px;
-    border: 2px solid var(--primary);
-    transition: all 0.2s ease-out;
+    background-color: rgba(100, 255, 218, 0.15);
 }
 
 /* Navigation */
@@ -112,11 +111,11 @@ body {
 
 /* Hero Section */
 .hero-section {
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
     display: flex;
     align-items: center;
-    padding: 0 150px;
-    margin-top: -80px;
+    padding: 0;
+    margin: 0;
 }
 
 .hero-content {
@@ -180,11 +179,9 @@ body {
 
 /* About Section */
 .section {
-    padding: 100px 0;
-    margin: 0 auto;
-    max-width: 1200px;
-    opacity: 0;
-    transform: translateY(20px);
+    margin: 100px 0;
+    padding: 50px 0;
+    position: relative;
 }
 
 .section.visible {
@@ -427,15 +424,13 @@ footer {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-image: 
-        linear-gradient(rgba(10, 25, 47, 0.8) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(10, 25, 47, 0.8) 1px, transparent 1px);
+        linear-gradient(rgba(100, 255, 218, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 255, 218, 0.05) 1px, transparent 1px);
     background-size: 30px 30px;
-    z-index: -1;
-    opacity: 0.2;
-    animation: gridMove 15s linear infinite;
+    z-index: -2;
 }
 
 /* Glassmorphism Cards */
@@ -751,22 +746,48 @@ html {
 /* Background styling */
 body {
     background-color: var(--navy);
-    position: relative;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
 }
 
-.background-grid {
+.grid-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     background-image: 
-        linear-gradient(to right, rgba(100, 255, 218, 0.1) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(100, 255, 218, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: -1;
-    opacity: 0.2;
+        linear-gradient(rgba(100, 255, 218, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 255, 218, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    z-index: -2;
+}
+
+.gradient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 50%, rgba(100, 255, 218, 0.1), transparent 50%);
+    z-index: -3;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.about-content,
+.projects-grid,
+.achievements-grid,
+.contact-content {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 
