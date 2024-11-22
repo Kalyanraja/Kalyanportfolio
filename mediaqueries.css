@@ -197,3 +197,29 @@
         grid-template-columns: repeat(4, 1fr);
     }
 }
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 0 20px;
+    }
+    
+    .hero-title h1 {
+        font-size: 40px;
+    }
+    
+    .hero-title h2 {
+        font-size: 30px;
+    }
+    
+    .experience-item {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .mobile-menu {
+        display: block;
+    }
+}
